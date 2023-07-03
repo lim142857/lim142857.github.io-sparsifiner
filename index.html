@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Sparsifiner: Learning Sparse Instance-Dependent Attention for Efficient Vision Transformers">
+  <meta name="keywords" content="efficient transformers, sparse attention, sparse transformers">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sparsifiner</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Sparsifiner: Learning Sparse Instance-Dependent Attention for Efficient Vision Transformers</h1>
+          <div class="is-size-5 publication-authors">
+<!--            <span class="author-block">-->
+<!--              Anonymous authors-->
+<!--            </span>-->
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/cong-wei-30">Cong Wei</a><sup>1</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=en&user=Gd2IGrEAAAAJ&view_op=list_works&sortby=pubdate">Brendan Duke</a><sup>1,3</sup>    </span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/ruowei-irene-jiang-a1743576?originalSubdomain=ca">Ruowei Jiang</a><sup>3</sup>    </span>
+            <span class="author-block">
+              <a href="https://www.ece.utoronto.ca/people/aarabi-p/">Parham Aarabi</a><sup>1,3</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://www.gwtaylor.ca/">Graham W. Taylor</a><sup>2,4</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.cs.toronto.edu/~florian/">Florian Shkurti</a><sup>1,2</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>
+              University of Toronto
+            </span>
+            <span class="author-block"><sup>2</sup>
+                University of Guelph
+            </span>
+            <span class="author-block"><sup>3</sup>
+                ModiFace, Inc.
+            </span>
+            <span class="author-block"><sup>4</sup>
+                Vector Institute
+            </span>
+          </div>
+
+<!--          <div class="is-size-5 publication-authors">-->
+<!--            <span class="author-block">-->
+<!--              {c58wei}@uwaterloo.ca-->
+<!--            </span>-->
+<!--          </div>-->
+
+           <div class="column has-text-centered">
+             <div class="publication-links">
+<!--              <span class="link-block">-->
+<!--                <a href=""-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fa fa-code" aria-hidden="true"></i>-->
+<!--                  </span>-->
+<!--                  <span>Colab (Coming Soon)</span>-->
+<!--                </a>-->
+<!--              </span>-->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2303.13755"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=pUISIydZFHU&ab_channel=CongWei"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                  </a>
+              </span>
+            </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <img src="static/images/goal.png">
+        <h5 class="subtitle has-text-centered">
+          Accelerating ViT by learning instance-dependent, sparse attention patterns<sup>(d)</sup>.
+        </h5>
+      </div>
+    </div>
+  </div>
+</section>
+    
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Vision Transformers (ViT) have shown competitive advantages in terms of performance compared to convolutional
+            neural networks (CNNs), though they often come with high
+            computational costs. To this end, previous methods explore
+            different attention patterns by limiting a fixed number of
+            spatially nearby tokens to accelerate the ViT’s multi-head
+            self-attention (MHSA) operations.
+            However, such structured attention patterns limit the token-to-token connections
+            to their spatial relevance, which disregards learned semantic connections from a full attention mask.
+            In this work, we propose an approach to learn instance-dependent attention patterns,
+            by devising a lightweight connectivity predictor module that estimates the connectivity score of each
+            pair of tokens. Intuitively, two tokens have high connectivity scores
+            if the features are considered relevant either spatially or semantically.
+            As each token only attends to a small number of other tokens, the binarized connectivity masks
+            are often very sparse by nature and therefore provide the
+            opportunity to reduce network FLOPs via sparse computations. Equipped with the learned unstructured attention
+            pattern, sparse attention ViT (Sparsifiner) produces a superior Pareto frontier between FLOPs and top-1 accuracy on
+            ImageNet compared to token sparsity. Our method reduces
+            48% ∼ 69% FLOPs of MHSA while the accuracy drop is
+            within 0.4%. We also show that combining attention and
+            token sparsity reduces ViT FLOPs by over 60%.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/pUISIydZFHU?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Visualization</h2>
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+          <img src="static/images/attention_mask_group1.png">
+          <h5 class="subtitle has-text-centered">
+            Sparsifiner generates different sparse patterns for different tokens in the same image.
+            The sparse attention retains all the most salient relations with the given query patch (marked as yellow squares)
+          </h5>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+          <img src="static/images/attention_mask_group2.png">
+          <h5 class="subtitle has-text-centered">
+            Visualization of connectivity mask with budget size of 20 (10% of full attention connectivity)
+          </h5>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+          <h2 class="title is-3">Methodology</h2>
+          <img src="static/images/method01.png">
+          <h5 class="subtitle has-text-centered">
+            Network Architecture: Replacing the Dense MHSA in ViT with a Sparse MHSA.
+            A connectivity pattern predictor module estimates the connectivity score between tokens.
+          </h5>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+          <img src="static/images/method02.png">
+          <h5 class="subtitle has-text-centered">
+            How to efficiently generate 𝑵^𝟐 attention connectivity scores?
+            Computing a sparse low-rank approximation of dense attention as the attention score.
+          </h5>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+<div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Experiment Results</h2>
+        <div>
+        <img src="static/images/evaluation01.png"><img src="static/images/evaluation02.png">
+        </div>
+        <h5 class="subtitle has-text-centered">
+          Sparsifiner can achieve over 73% reduction in FLOPs compared with the dense-attention baseline.
+          Sparsifiner produces a superior trade-off between FLOPs and top-1 accuracy on ImageNet compared to token sparsity methods.        </h5>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX2">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+      <pre><code>@InProceedings{Wei_2023_CVPR,
+        author    = {Wei, Cong and Duke, Brendan and Jiang, Ruowei and Aarabi, Parham and Taylor, Graham W. and Shkurti, Florian},
+        title     = {Sparsifiner: Learning Sparse Instance-Dependent Attention for Efficient Vision Transformers},
+        booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+        month     = {June},
+        year      = {2023},
+        pages     = {22680-22689}}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
